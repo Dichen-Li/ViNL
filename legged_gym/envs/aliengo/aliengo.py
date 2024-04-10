@@ -71,6 +71,7 @@ class AlienGoCameraMixin:
             )
 
     def make_handle_trans(self, width, height, env_idx, trans, rot, hfov=None):
+        print("##################AlienGoCameraMixin().make_handle_trans")#ldc
         camera_props = gymapi.CameraProperties()
         camera_props.width = width
         camera_props.height = height
@@ -114,14 +115,14 @@ class Aliengo(AlienGoCameraMixin, LeggedRobot):
         if cfg.env.train_type == "lbc":
             # print("INITIALIZING 2 CAMERAS")
             for i in range(self.num_envs):
-                
                 res = cfg.env.camera_res
                 cam1, trans1 = self.make_handle_trans(res[0], res[1], i, (0.35, 0.0, 0.0), (0.0, 3.14/6, 0))
                 
                 self.camera_handles.append(cam1)
 
                 body_handle = self.gym.find_actor_rigid_body_handle(
-                    self.envs[env_idx], self.actor_handles[env_idx], "base"
+                    # self.envs[env_idx], self.actor_handles[env_idx], "base"#ldc
+                    self.envs[i], self.actor_handles[i], "base"
                 )
 
                 self.gym.attach_camera_to_body(

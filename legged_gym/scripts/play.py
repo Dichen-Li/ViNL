@@ -165,7 +165,9 @@ def play(args):
             filename = os.path.join(
                 # LEGGED_GYM_ROOT_DIR,
                 # "/home/simar/Projects/isaacVL/localDev/legged_gym",
-                "/home/naoki/gt/vl/legged_gym",
+                # "/home/naoki/gt/vl/legged_gym",
+                LEGGED_GYM_ROOT_DIR,
+                "legged_gym",
                 "logs",
                 train_cfg.runner.experiment_name,
                 "exported",
