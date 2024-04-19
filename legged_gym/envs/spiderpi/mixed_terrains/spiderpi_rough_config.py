@@ -115,14 +115,14 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
         any_contacts = True
 
 
-class AliengoRoughCfgPPO(LeggedRobotCfgPPO):
+class SpiderpiRoughCfgPPO(LeggedRobotCfgPPO):
     class obsSize(LeggedRobotCfgPPO.obsSize):
         encoder_hidden_dims = [128, 64, 32]
 
     class runner(LeggedRobotCfgPPO.runner):
         alg = "ppo"
         run_name = "RoughTerrainDMEnc"#ldc#the name of certain configure training pt file in ViNL/logs/experiment_name.
-        experiment_name = "rough_aliengo"#ldc#the directory name for certain configure training pt file in ViNL/logs, also known as the log_dir in TaskRegisty.make_alg_runner or OnPolicyRunner.log_dir
+        experiment_name = "rough_spiderpi"#ldc#the directory name for certain configure training pt file in ViNL/logs, also known as the log_dir in TaskRegisty.make_alg_runner or OnPolicyRunner.log_dir
         load_run = -1
         # resume_path = "weights/ny_rough_aliengo_Sep06_11-46-01_RoughTerrainDMEnc_model_1500.pt"
         

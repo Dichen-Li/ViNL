@@ -34,7 +34,7 @@ from isaacgym.torch_utils import *
 from isaacgym import gymapi
 from legged_gym.envs import LeggedRobot
 
-from .mixed_terrains.spiderpi_rough_config import AliengoRoughCfg
+from .mixed_terrains.spiderpi_rough_config import SpiderpiRoughCfg
 
 
 class SpiderpiCameraMixin:
