@@ -32,7 +32,7 @@ from legged_gym import LEGGED_GYM_ROOT_DIR, LEGGED_GYM_ENVS_DIR
 from legged_gym.envs.a1.a1_config import A1RoughCfg, A1RoughCfgPPO
 from legged_gym.envs.aliengo.mixed_terrains.aliengo_nav_config import AliengoNavCfg, AliengoNavCfgAlg
 from .base.legged_robot import LeggedRobot
-
+#ldc
 
 from .anymal_c.anymal import Anymal
 from .aliengo.aliengo import Aliengo
