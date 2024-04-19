@@ -45,8 +45,10 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
         # num_envs = 4096
         num_envs = 1024  # was getting a seg fault
         # num_envs = 100  # was getting a seg fault
-        num_actions = 12
-        num_observations = 235
+        # num_actions = 12#ldc#urdf
+        num_actions = 18
+        # num_observations = 235
+        num_observations = 253#ldc#aliengo.urdf->spiderpi.urdf:235->253#due to the increase of legs, from 12 to 18. And there are three variables related to this.#6*3=18#235+18=253
         num_proprio_obs = 48
         camera_res = [1280, 720]
         camera_type = "d"  # rgb
@@ -62,19 +64,39 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
     class init_state(LeggedRobotCfg.init_state):
         pos = [0.0, 0.0, 0.38]  # x,y,z [m]
 
+        # default_joint_angles = {  # = target angles [rad] when action = 0.0#ldc#urdf
+        #     "FL_hip_joint": 0.1,  # [rad]
+        #     "RL_hip_joint": 0.1,  # [rad]
+        #     "FR_hip_joint": -0.1,  # [rad]
+        #     "RR_hip_joint": -0.1,  # [rad]
+        #     "FL_thigh_joint": 0.8,  # [rad]
+        #     "RL_thigh_joint": 1.0,  # [rad]
+        #     "FR_thigh_joint": 0.8,  # [rad]
+        #     "RR_thigh_joint": 1.0,  # [rad]
+        #     "FL_calf_joint": -1.5,  # [rad]
+        #     "RL_calf_joint": -1.5,  # [rad]
+        #     "FR_calf_joint": -1.5,  # [rad]
+        #     "RR_calf_joint": -1.5,  # [rad]
+        # }
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            "FL_hip_joint": 0.1,  # [rad]
-            "RL_hip_joint": 0.1,  # [rad]
-            "FR_hip_joint": -0.1,  # [rad]
-            "RR_hip_joint": -0.1,  # [rad]
-            "FL_thigh_joint": 0.8,  # [rad]
-            "RL_thigh_joint": 1.0,  # [rad]
-            "FR_thigh_joint": 0.8,  # [rad]
-            "RR_thigh_joint": 1.0,  # [rad]
-            "FL_calf_joint": -1.5,  # [rad]
-            "RL_calf_joint": -1.5,  # [rad]
-            "FR_calf_joint": -1.5,  # [rad]
-            "RR_calf_joint": -1.5,  # [rad]
+            "body_leg_0": 0.1,  # [rad]
+            "leg_0_1_2": 0.1,  # [rad]
+            "leg_0_2_3": -0.1,  # [rad]
+            "body_leg_1": 0.1,  # [rad]
+            "leg_1_1_2": 0.1,  # [rad]
+            "leg_1_2_3": -0.1,  # [rad]
+            "body_leg_2": 0.1,  # [rad]
+            "leg_2_1_2": 0.1,  # [rad]
+            "leg_2_2_3": -0.1,  # [rad]
+            "body_leg_3": 0.1,  # [rad]
+            "leg_3_1_2": 0.1,  # [rad]
+            "leg_3_2_3": -0.1,  # [rad]
+            "body_leg_4": 0.1,  # [rad]
+            "leg_4_1_2": 0.1,  # [rad]
+            "leg_4_2_3": -0.1,  # [rad]
+            "body_leg_5": 0.1,  # [rad]
+            "leg_5_1_2": 0.1,  # [rad]
+            "leg_5_2_3": -0.1,  # [rad]
         }
 
     class control(LeggedRobotCfg.control):
@@ -90,7 +112,7 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
         decimation = 4
 
     class asset(LeggedRobotCfg.asset):
-        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/spiderpi/urdf/spiderpi.urdf"
+        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/spiderpi/urdf/spiderpi.urdf"#ldc#urdf
         foot_name = "foot"
         penalize_contacts_on = ["thigh", "calf"]
         terminate_after_contacts_on = ["base", "trunk", "hip"]
@@ -121,7 +143,7 @@ class SpiderpiRoughCfgPPO(LeggedRobotCfgPPO):
 
     class runner(LeggedRobotCfgPPO.runner):
         alg = "ppo"
-        run_name = "RoughTerrainDMEnc"#ldc#the name of certain configure training pt file in ViNL/logs/experiment_name.
+        run_name = "RoughTerrainDMEnc"#ldc#the name of certain configure training pt file under ViNL/logs/experiment_name.
         experiment_name = "rough_spiderpi"#ldc#the directory name for certain configure training pt file in ViNL/logs, also known as the log_dir in TaskRegisty.make_alg_runner or OnPolicyRunner.log_dir
         load_run = -1
         # resume_path = "weights/ny_rough_aliengo_Sep06_11-46-01_RoughTerrainDMEnc_model_1500.pt"

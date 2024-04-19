@@ -51,6 +51,16 @@ import pickle
 SAVE_IMG = False
 MAX_DEPTH = 10
 
+def matches_leg_pattern(text):#ldc, check if body_names matches 'leg_{i}_3', that means check if the string represent the lowest leg. Must used with spiderpi.urdf
+    # Check if the string starts with 'leg_' and ends with '_3'
+    if text.startswith('leg_') and text.endswith('_3'):
+        # Extract the middle part of the string between 'leg_' and '_3'
+        middle_part = text[4:-2]  # Skip the first 4 characters and the last 2 characters
+        
+        # Check if the middle part is purely numeric
+        if middle_part.isdigit():
+            return True
+    return False
 
 class LeggedRobot(BaseTask):
     def __init__(
@@ -318,10 +328,10 @@ class LeggedRobot(BaseTask):
                 self.base_ang_vel * self.obs_scales.ang_vel,
                 self.projected_gravity,
                 self.commands[:, :3] * self.commands_scale,
-                (self.dof_pos - self.default_dof_pos) * self.obs_scales.dof_pos,
-                self.dof_vel * self.obs_scales.dof_vel,
-                self.actions,
-            ),
+                (self.dof_pos - self.default_dof_pos) * self.obs_scales.dof_pos,#ldc#aliengo.urdf->spiderpi.urdf:[1024,12]->[1024,18]
+                self.dof_vel * self.obs_scales.dof_vel,#ldc#aliengo.urdf->spiderpi.urdf:[1024,12]->[1024,18]
+                self.actions,#ldc#aliengo.urdf->spiderpi.urdf:[1024,12]->[1024,18]
+            ),#ldc#in total add 18 parameters casuing problem in compute_observations. Need to change the self.noise_scale_vec
             dim=-1,
         )
         # add perceptive inputs if not blind
@@ -760,11 +770,22 @@ class LeggedRobot(BaseTask):
         noise_vec[3:6] = noise_scales.ang_vel * noise_level * self.obs_scales.ang_vel
         noise_vec[6:9] = noise_scales.gravity * noise_level
         noise_vec[9:12] = 0.0  # commands
-        noise_vec[12:24] = noise_scales.dof_pos * noise_level * self.obs_scales.dof_pos
-        noise_vec[24:36] = noise_scales.dof_vel * noise_level * self.obs_scales.dof_vel
-        noise_vec[36:48] = 0.0  # previous actions
+        # noise_vec[12:24] = noise_scales.dof_pos * noise_level * self.obs_scales.dof_pos
+        # noise_vec[24:36] = noise_scales.dof_vel * noise_level * self.obs_scales.dof_vel
+        # noise_vec[36:48] = 0.0  # previous actions
+        # if self.cfg.terrain.measure_heights:
+        #     noise_vec[48:235] = (
+        #         noise_scales.height_measurements
+        #         * noise_level
+        #         * self.obs_scales.height_measurements
+        #     )
+        #ldc#aliengo.urdf->spiderpi.urdf:[1024,12]->[1024,18]
+        #the 3 parts here should be expanded from 12 to 18. Each represents dof_pos, dof_vel and actions.
+        noise_vec[12:30] = noise_scales.dof_pos * noise_level * self.obs_scales.dof_pos
+        noise_vec[30:48] = noise_scales.dof_vel * noise_level * self.obs_scales.dof_vel
+        noise_vec[48:66] = 0.0  # previous actions
         if self.cfg.terrain.measure_heights:
-            noise_vec[48:235] = (
+            noise_vec[66:253] = (
                 noise_scales.height_measurements
                 * noise_level
                 * self.obs_scales.height_measurements
@@ -1058,7 +1079,8 @@ class LeggedRobot(BaseTask):
         self.dof_names = self.gym.get_asset_dof_names(robot_asset)
         self.num_bodies = len(body_names)
         self.num_dofs = len(self.dof_names)
-        feet_names = [s for s in body_names if self.cfg.asset.foot_name in s]
+        # feet_names = [s for s in body_names if self.cfg.asset.foot_name in s]#ldc
+        feet_names=[s for s in body_names if matches_leg_pattern(s)]#ldc. get foot name
         penalized_contact_names = []
         for name in self.cfg.asset.penalize_contacts_on:
             penalized_contact_names.extend([s for s in body_names if name in s])
@@ -1550,7 +1572,8 @@ class LeggedRobot(BaseTask):
         # print("lowest contacting foot: ", feet_heights[z_forces > 1].min())
         # print("highest contacting foot: ", feet_heights[z_forces > 50.0].max())
         z_forces[feet_heights < 0.05] = 0
-        z_ans = z_forces.view(-1, 4).sum(dim=1)
+        # z_ans = z_forces.view(-1, 4).sum(dim=1)
+        z_ans = z_forces.view(-1, 6).sum(dim=1)#ldc#6 represents 6 bottom legs in spiderpi.
         z_ans[z_ans > 1] = 1  # (num_robots)
 
         # ans = torch.ones(1024).cuda()
