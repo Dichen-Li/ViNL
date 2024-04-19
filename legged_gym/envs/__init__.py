@@ -37,6 +37,7 @@ from .base.legged_robot import LeggedRobot
 from .anymal_c.anymal import Anymal
 from .aliengo.aliengo import Aliengo
 from .aliengo.aliengoNav import AliengoNav
+from .spiderpi.spiderpi import Spiderpi#ldc
 
 from .aliengo.mixed_terrains.aliengo_rough_config import (
     AliengoRoughCfg,
@@ -46,6 +47,7 @@ from .aliengo.flat.aliengo_flat_config import AliengoFlatCfg, AliengoFlatCfgPPO
 from .aliengo.mixed_terrains.aliengo_obs_config import AliengoObsCfg, AliengoObsCfgPPO
 from .aliengo.mixed_terrains.aliengo_lbc_config import AliengoLbcCfg, AliengoLbcCfgPPO
 
+from .spiderpi.mixed_terrains.spiderpi_rough_config import SpiderpiRoughCfg, SpiderpiRoughCfgPPO#ldc
 
 from .anymal_c.mixed_terrains.anymal_c_rough_config import (
     AnymalCRoughCfg,

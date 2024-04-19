@@ -108,7 +108,7 @@ def play(args):
     obs = env.get_observations()
     # print("obs shape: ", obs.shape)
     # load policy
-    train_cfg.runner.resume = True
+    train_cfg.runner.resume = True#ldc/this is used in task_registry.py. Enable it when I want to evaluate weights/lbc.pt.#I think it's used to in play.py. pt stored under ViNL directory(resume_path)
     ppo_runner, train_cfg = task_registry.make_alg_runner(
         env=env, name=args.task, args=args, train_cfg=train_cfg
     )
