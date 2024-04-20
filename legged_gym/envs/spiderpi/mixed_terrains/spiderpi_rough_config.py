@@ -113,9 +113,25 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
 
     class asset(LeggedRobotCfg.asset):
         file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/spiderpi/urdf/spiderpi.urdf"#ldc#urdf
-        foot_name = "foot"
-        penalize_contacts_on = ["thigh", "calf"]
-        terminate_after_contacts_on = ["base", "trunk", "hip"]
+        # foot_name = "foot"
+        foot_name=['leg_0_3', 'leg_1_3', 'leg_2_3', 'leg_3_3', 'leg_4_3', 'leg_5_3']#ldc#name the feet to be referenced in legged_robot.py
+        # penalize_contacts_on = ["thigh", "calf"]
+        penalize_contacts_on=[#ldc
+            'base_link',
+            'leg_0_2',
+            'leg_0_1',
+            'leg_1_2',
+            'leg_1_1',
+            'leg_2_2',
+            'leg_2_1',
+            'leg_3_2',
+            'leg_3_1',
+            'leg_4_2',
+            'leg_4_1',
+            'leg_5_2',
+            'leg_5_1']
+        terminate_after_contacts_on=[]#ldc
+        # terminate_after_contacts_on = ["base", "trunk", "hip"]
         self_collisions = 1  # 1 to disable, 0 to enable...bitwise filter
 
     class domain_rand(LeggedRobotCfg.domain_rand):

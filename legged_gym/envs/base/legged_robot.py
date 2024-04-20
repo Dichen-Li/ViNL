@@ -51,17 +51,6 @@ import pickle
 SAVE_IMG = False
 MAX_DEPTH = 10
 
-def matches_leg_pattern(text):#ldc, check if body_names matches 'leg_{i}_3', that means check if the string represent the lowest leg. Must used with spiderpi.urdf
-    # Check if the string starts with 'leg_' and ends with '_3'
-    if text.startswith('leg_') and text.endswith('_3'):
-        # Extract the middle part of the string between 'leg_' and '_3'
-        middle_part = text[4:-2]  # Skip the first 4 characters and the last 2 characters
-        
-        # Check if the middle part is purely numeric
-        if middle_part.isdigit():
-            return True
-    return False
-
 class LeggedRobot(BaseTask):
     def __init__(
         self, cfg: LeggedRobotCfg, sim_params, physics_engine, sim_device, headless
@@ -1080,13 +1069,15 @@ class LeggedRobot(BaseTask):
         self.num_bodies = len(body_names)
         self.num_dofs = len(self.dof_names)
         # feet_names = [s for s in body_names if self.cfg.asset.foot_name in s]#ldc
-        feet_names=[s for s in body_names if matches_leg_pattern(s)]#ldc. get foot name
-        penalized_contact_names = []
-        for name in self.cfg.asset.penalize_contacts_on:
-            penalized_contact_names.extend([s for s in body_names if name in s])
-        termination_contact_names = []
-        for name in self.cfg.asset.terminate_after_contacts_on:
-            termination_contact_names.extend([s for s in body_names if name in s])
+        feet_names=self.cfg.asset.foot_name#ldc. get feet name
+        penalized_contact_names=self.cfg.asset.penalize_contacts_on#ldc
+        termination_contact_names=self.cfg.asset.terminate_after_contacts_on#ldc
+        # penalized_contact_names = []
+        # for name in self.cfg.asset.penalize_contacts_on:
+        #     penalized_contact_names.extend([s for s in body_names if name in s])
+        # termination_contact_names = []
+        # for name in self.cfg.asset.terminate_after_contacts_on:
+        #     termination_contact_names.extend([s for s in body_names if name in s])
 
         base_init_state_list = (
             self.cfg.init_state.pos
