@@ -128,7 +128,7 @@ def play(args):
 
     logger = Logger(env.dt)
     robot_index = 0  # which robot is used for logging
-    joint_index = 1  # which joint is used for logging
+    joint_index = range(12)  # which joint is used for logging#ldc
     stop_state_log = 800  # number of steps before plotting states#ldc#100->2s, and I need over 12s.
     stop_rew_log = (
         env.max_episode_length + 1
@@ -184,11 +184,11 @@ def play(args):
         if i < stop_state_log:
             logger.log_states(
                 {
-                    "dof_pos_target": actions[robot_index, joint_index].item()
+                    "dof_pos_target": actions[robot_index, joint_index]
                     * env.cfg.control.action_scale,
-                    "dof_pos": env.dof_pos[robot_index, joint_index].item(),
-                    "dof_vel": env.dof_vel[robot_index, joint_index].item(),
-                    "dof_torque": env.torques[robot_index, joint_index].item(),
+                    "dof_pos": env.dof_pos[robot_index, joint_index],
+                    "dof_vel": env.dof_vel[robot_index, joint_index],
+                    "dof_torque": env.torques[robot_index, joint_index],
                     "command_x": env.commands[robot_index, 0].item(),
                     "command_y": env.commands[robot_index, 1].item(),
                     "command_yaw": env.commands[robot_index, 2].item(),

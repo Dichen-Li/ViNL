@@ -72,20 +72,29 @@ class Logger:
             time = np.linspace(0, len(value) * self.dt, len(value))
             break
         log = self.state_log
+        #ldc#change the number of joints plotted
         # plot joint targets and measured positions
         a = axs[1, 0]
         if log["dof_pos"]:
-            a.plot(time, log["dof_pos"], label="measured")
+            dof_pos=np.array(log["dof_pos"])
+            for i in range(dof_pos.shape[1]):
+                a.plot(time, dof_pos[:,i], label=f'measured {i} joint')
         if log["dof_pos_target"]:
-            a.plot(time, log["dof_pos_target"], label="target")
+            dof_pos_target=np.array(log["dof_pos_target"])
+            for i in range(dof_pos_target.shape[1]):
+                a.plot(time, dof_pos_target[:,i], label=f'target {i} joint')
         a.set(xlabel="time [s]", ylabel="Position [rad]", title="DOF Position")
         a.legend()
         # plot joint velocity
         a = axs[1, 1]
         if log["dof_vel"]:
-            a.plot(time, log["dof_vel"], label="measured")
+            dof_vel=np.array(log["dof_vel"])
+            for i in range(dof_vel):
+                a.plot(time, dof_vel[:i], label=f'measured {i} joint')
         if log["dof_vel_target"]:
-            a.plot(time, log["dof_vel_target"], label="target")
+            dof_vel_target=np.array(log["dof_vel_target"])
+            for i in range(dof_vel_target):
+                a.plot(time, dof_vel_target[:i], label=f'target {i} joint')
         a.set(xlabel="time [s]", ylabel="Velocity [rad/s]", title="Joint Velocity")
         a.legend()
         # plot base vel x
@@ -131,7 +140,9 @@ class Logger:
         # plot torque/vel curves
         a = axs[2, 1]
         if log["dof_vel"] != [] and log["dof_torque"] != []:
-            a.plot(log["dof_vel"], log["dof_torque"], "x", label="measured")
+            dof_torque=np.array(log["dof_torque"])
+            for i in range(dof_vel.shape[1]):
+                a.plot(dof_vel[:,i], dof_torque[:,i], ".", label=f'measured f{i} joint')
         a.set(
             xlabel="Joint vel [rad/s]",
             ylabel="Joint Torque [Nm]",
