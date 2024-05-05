@@ -144,6 +144,6 @@ class AliengoObsCfgPPO(LeggedRobotCfgPPO):
         max_iterations = 6000  # number of policy updates
         num_test_envs=1
 
-        resume = True
-        resume_path = "weights/rough.pt" # if you want to train
-        # resume_path = "weights/obs.pt" #if you want to eval
+        resume = True#ldc#used for continue learing in training, and don't need to be commented
+        # resume_path = "weights/4.18aliengo/rough.pt" # if you want to train
+        resume_path = "weights/4.18aliengo/obs.pt" #if you want to eval

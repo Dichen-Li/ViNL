@@ -144,6 +144,7 @@ class Logger:
             a.plot(time, log["dof_torque"], label="measured")
         a.set(xlabel="time [s]", ylabel="Joint Torque [Nm]", title="Torque")
         a.legend()
+        plt.subplots_adjust(hspace=0.35)#ldc#adjust the UI
         plt.show()
 
     def print_rewards(self):
