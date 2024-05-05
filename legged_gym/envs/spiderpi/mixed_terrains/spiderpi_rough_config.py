@@ -32,7 +32,7 @@ from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobot
 import numpy as np
 
 """
-changes from a1 to spiderpi
+changes from a1 to aliengo
 - pd gains
 - starting height
 - target height?
