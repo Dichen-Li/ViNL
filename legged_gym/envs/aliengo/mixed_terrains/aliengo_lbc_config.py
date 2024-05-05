@@ -147,12 +147,12 @@ class AliengoLbcCfgPPO(LeggedRobotCfgPPO):
         max_iterations = 10000  # number of policy updates
         num_test_envs = 1
 
-        # resume = True #True for eval, false for train#ldc#look at this. Set it to False when training.
-        resume = False #True for eval, false for train#ldc#look at this. Set it to False when training.
+        resume = True #True for eval, false for train#ldc#look at this. Set it to True when evaluating.
+        # resume = False #True for eval, false for train#ldc#look at this. Set it to False when training.
 
-        resume_path = "weights/lbc.pt"
+        resume_path = "weights/4.18aliengo/lbc.pt"
 
-        teacher_policy = "weights/obs.pt"
+        teacher_policy = "weights/4.18aliengo/obs.pt"
 
     class lbc(LeggedRobotCfgPPO.lbc):
         batch_size = 10
