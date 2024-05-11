@@ -889,10 +889,15 @@ class LeggedRobot(BaseTask):
             self.default_dof_pos[i] = angle
             found = False
             for dof_name in self.cfg.control.stiffness.keys():
-                if dof_name in name:
-                    self.p_gains[i] = self.cfg.control.stiffness[dof_name]
-                    self.d_gains[i] = self.cfg.control.damping[dof_name]
-                    found = True
+                # if dof_name in name:
+                #     self.p_gains[i] = self.cfg.control.stiffness[dof_name]
+                #     self.d_gains[i] = self.cfg.control.damping[dof_name]
+                #     found = True
+                #ldc###
+                self.p_gains[i] = self.cfg.control.stiffness[dof_name]
+                self.d_gains[i] = self.cfg.control.damping[dof_name]
+                found = True
+                #ldc###
             if not found:
                 self.p_gains[i] = 0.0
                 self.d_gains[i] = 0.0
@@ -1558,7 +1563,8 @@ class LeggedRobot(BaseTask):
         # print("contact filt shape: ", contact_filt.shape)
 
         xy_forces[feet_heights < 0.05] = 0
-        xy_ans = xy_forces.view(-1, 4).sum(dim=1)
+        # xy_ans = xy_forces.view(-1, 4).sum(dim=1)
+        xy_ans = xy_forces.view(-1, 6).sum(dim=1)#ldc#6 represents 6 bottom legs in spiderpi.
 
         # print("lowest contacting foot: ", feet_heights[z_forces > 1].min())
         # print("highest contacting foot: ", feet_heights[z_forces > 50.0].max())

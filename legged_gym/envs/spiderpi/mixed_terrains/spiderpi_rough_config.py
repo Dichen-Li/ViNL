@@ -43,7 +43,7 @@ changes from a1 to aliengo
 class SpiderpiRoughCfg(LeggedRobotCfg):
     class env(LeggedRobotCfg.env):
         # num_envs = 4096
-        num_envs = 1024  # was getting a seg fault
+        num_envs = 1  # was getting a seg fault#ldc#set to 1 to avoid nan problem
         # num_envs = 100  # was getting a seg fault
         # num_actions = 12#ldc#urdf
         num_actions = 18
@@ -80,24 +80,24 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
         #     "RR_calf_joint": -1.5,  # [rad]
         # }
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            "body_leg_0": 0.1,  # [rad]
-            "leg_0_1_2": 0.1,  # [rad]
-            "leg_0_2_3": -0.1,  # [rad]
-            "body_leg_1": 0.1,  # [rad]
-            "leg_1_1_2": 0.1,  # [rad]
-            "leg_1_2_3": -0.1,  # [rad]
-            "body_leg_2": 0.1,  # [rad]
-            "leg_2_1_2": 0.1,  # [rad]
-            "leg_2_2_3": -0.1,  # [rad]
-            "body_leg_3": 0.1,  # [rad]
-            "leg_3_1_2": 0.1,  # [rad]
-            "leg_3_2_3": -0.1,  # [rad]
-            "body_leg_4": 0.1,  # [rad]
-            "leg_4_1_2": 0.1,  # [rad]
-            "leg_4_2_3": -0.1,  # [rad]
-            "body_leg_5": 0.1,  # [rad]
-            "leg_5_1_2": 0.1,  # [rad]
-            "leg_5_2_3": -0.1,  # [rad]
+            "body_leg_0": 0,  # [rad]
+            "leg_0_1_2": 1,  # [rad]
+            "leg_0_2_3": 0,  # [rad]
+            "body_leg_1": 0,  # [rad]
+            "leg_1_1_2": 0,  # [rad]
+            "leg_1_2_3": 0,  # [rad]
+            "body_leg_2": 0,  # [rad]
+            "leg_2_1_2": 0,  # [rad]
+            "leg_2_2_3": 0,  # [rad]
+            "body_leg_3": 0,  # [rad]
+            "leg_3_1_2": 0,  # [rad]
+            "leg_3_2_3": 0,  # [rad]
+            "body_leg_4": 0,  # [rad]
+            "leg_4_1_2": 0,  # [rad]
+            "leg_4_2_3": 0,  # [rad]
+            "body_leg_5": 0,  # [rad]
+            "leg_5_1_2": 0,  # [rad]
+            "leg_5_2_3": 0,  # [rad]
         }
 
     class control(LeggedRobotCfg.control):
