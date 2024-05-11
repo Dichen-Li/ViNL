@@ -1500,7 +1500,8 @@ class LeggedRobot(BaseTask):
         self.last_contacts = contact
         xy_forces[feet_heights < 0.05] = 0
         z_forces[feet_heights < 0.05] = 0
-        z_ans = z_forces.view(-1, 4).sum(dim=1)
+        # z_ans = z_forces.view(-1, 4).sum(dim=1)
+        z_ans = z_forces.view(-1, 6).sum(dim=1)#ldc#reward foot 4->6
         z_ans[z_ans > 1] = 1
 
         return z_ans

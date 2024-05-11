@@ -44,7 +44,7 @@ class SpiderpiObsCfg(LeggedRobotCfg):
     class env(LeggedRobotCfg.env):
         # num_envs = 4096
         # num_envs = 1024  # was getting a seg fault
-        num_envs = 3  # was getting a seg fault#ldc
+        num_envs = 2  # was getting a seg fault#ldc
         # num_envs = 100  # was getting a seg fault
         # num_actions = 12
         num_actions = 18#ldc
@@ -185,5 +185,5 @@ class SpiderpiObsCfgPPO(LeggedRobotCfgPPO):
         num_test_envs=1
 
         resume = True
-        resume_path = "weights/5.10spiderpi/rough.pt" # if you want to train
-        # resume_path = "weights/5.10spiderpi/obs.pt" #if you want to eval
+        # resume_path = "weights/5.10spiderpi/rough.pt" # if you want to train
+        resume_path = "weights/5.10spiderpi/obs.pt" #if you want to eval
