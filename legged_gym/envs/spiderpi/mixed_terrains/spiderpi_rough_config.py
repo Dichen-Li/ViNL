@@ -49,7 +49,8 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
         num_actions = 18
         # num_observations = 235
         num_observations = 253#ldc#aliengo.urdf->spiderpi.urdf:235->253#due to the increase of legs, from 12 to 18. And there are three variables related to this.#6*3=18#235+18=253
-        num_proprio_obs = 48
+        # num_proprio_obs = 48
+        num_proprio_obs = 66#ldc#aliengo.urdf->spiderpi.urdf:235->253#due to the increase of legs, from 12 to 18. And there are three variables related to this.#6*3=18#48+18=66
         camera_res = [1280, 720]
         camera_type = "d"  # rgb
         num_privileged_obs = None  # 187
@@ -114,22 +115,21 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
     class asset(LeggedRobotCfg.asset):
         file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/spiderpi/urdf/spiderpi.urdf"#ldc#urdf
         # foot_name = "foot"
-        foot_name=['leg_0_3', 'leg_1_3', 'leg_2_3', 'leg_3_3', 'leg_4_3', 'leg_5_3']#ldc#name the feet to be referenced in legged_robot.py
+        foot_name=['dummy_eef_0', 'dummy_eef_1', 'dummy_eef_2', 'dummy_eef_3', 'dummy_eef_4', 'dummy_eef_5']#ldc#name the feet to be referenced in legged_robot.py
         # penalize_contacts_on = ["thigh", "calf"]
         penalize_contacts_on=[#ldc
-            'base_link',
             'leg_0_2',
-            'leg_0_1',
+            'leg_0_3',
             'leg_1_2',
-            'leg_1_1',
+            'leg_1_3',
             'leg_2_2',
-            'leg_2_1',
+            'leg_2_3',
             'leg_3_2',
-            'leg_3_1',
+            'leg_3_3',
             'leg_4_2',
-            'leg_4_1',
+            'leg_4_3',
             'leg_5_2',
-            'leg_5_1']
+            'leg_5_3']
         terminate_after_contacts_on=[]#ldc
         # terminate_after_contacts_on = ["base", "trunk", "hip"]
         self_collisions = 1  # 1 to disable, 0 to enable...bitwise filter
