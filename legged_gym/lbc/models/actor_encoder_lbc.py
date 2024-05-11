@@ -6,7 +6,8 @@ from rsl_rl.modules.models.rnn_state_encoder import build_rnn_state_encoder
 from rsl_rl.modules.models.simple_cnn import SimpleCNN
 from torch.distributions import Normal
 
-PROPRIO_SIZE = 48
+# PROPRIO_SIZE = 48
+PROPRIO_SIZE = 66#ldc#48->66
 
 
 class CNNRNN(nn.Module):
@@ -52,13 +53,20 @@ class CNNRNN(nn.Module):
     def forward(self, observations, masks):
         if isinstance(observations, torch.Tensor):
             observations = observations[:, :-1]
+            # prop, _, images = (
+            #     observations[:, :48],
+            #     observations[:, 48 : 48 + 187],
+            #     observations[:, 48 + 187 :].view(
+            #         -1, self.image_size[0], self.image_size[1], 1
+            #     ),
+            # )
             prop, _, images = (
-                observations[:, :48],
-                observations[:, 48 : 48 + 187],
-                observations[:, 48 + 187 :].view(
+                observations[:, :66],
+                observations[:, 66 : 66 + 187],
+                observations[:, 66 + 187 :].view(
                     -1, self.image_size[0], self.image_size[1], 1
                 ),
-            )
+            )#ldc#48->66
         elif isinstance(observations, dict):
             prop = observations["proprioception"]
             images = observations["tilted_image"]
@@ -180,11 +188,16 @@ class Actor(nn.Module):
         self.distribution = Normal(mean, mean * 0.0 + self.std)
 
     def parse_observations(self, observations):
+        # return (
+        #     observations[:, :48],
+        #     observations[:, 48 : 48 + 187],
+        #     observations[:, 48 + 187 :],
+        # )
         return (
-            observations[:, :48],
-            observations[:, 48 : 48 + 187],
-            observations[:, 48 + 187 :],
-        )
+            observations[:, :66],
+            observations[:, 66 : 66 + 187],
+            observations[:, 66 + 187 :],
+        )#ldc#48->66
 
     def act(self, proprio, enc_depth_map, **kwargs):
         if os.environ["ISAAC_BLIND"] != "True":

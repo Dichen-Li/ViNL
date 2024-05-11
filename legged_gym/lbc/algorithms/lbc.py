@@ -113,7 +113,8 @@ class LBC:
         """
 
         # Compute the actions and values
-        prop, depth, image = obs[:, :48], obs[:, 48 : 48 + 187], obs[:, 48 + 187 :]
+        # prop, depth, image = obs[:, :48], obs[:, 48 : 48 + 187], obs[:, 48 + 187 :]
+        prop, depth, image = obs[:, :66], obs[:, 66 : 66 + 187], obs[:, 66 + 187 :]#ldc#48->66
         student_enc_dm = self.vision_encoder(obs)
 
         actions = self.actor.act(
