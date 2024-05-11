@@ -130,8 +130,8 @@ class SpiderpiRoughCfg(LeggedRobotCfg):
             'leg_4_3',
             'leg_5_2',
             'leg_5_3']
-        terminate_after_contacts_on=[]#ldc
         # terminate_after_contacts_on = ["base", "trunk", "hip"]
+        terminate_after_contacts_on=[]#ldc
         self_collisions = 1  # 1 to disable, 0 to enable...bitwise filter
 
     class domain_rand(LeggedRobotCfg.domain_rand):

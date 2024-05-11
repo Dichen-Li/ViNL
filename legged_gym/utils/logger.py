@@ -64,10 +64,10 @@ class Logger:
         self.plot_process.start()
 
     def _plot(self):
-        # return#ldc
+        # return#ldc#originally it is here
         nb_rows = 3
         nb_cols = 3
-        fig, axs = plt.subplots(nb_rows, nb_cols)
+        fig, axs = plt.subplots(nb_rows, nb_cols, figsize=(15, 10))
         for key, value in self.state_log.items():
             time = np.linspace(0, len(value) * self.dt, len(value))
             break
@@ -144,6 +144,8 @@ class Logger:
             a.plot(time, log["dof_torque"], label="measured")
         a.set(xlabel="time [s]", ylabel="Joint Torque [Nm]", title="Torque")
         a.legend()
+        plt.subplots_adjust(hspace=0.35)#ldc#adjust the UI
+        plt.savefig('ldc_output.png')
         plt.show()
 
     def print_rewards(self):

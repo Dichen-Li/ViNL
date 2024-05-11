@@ -40,14 +40,18 @@ changes from a1 to aliengo
 """
 
 
-class AliengoObsCfg(LeggedRobotCfg):
+class SpiderpiObsCfg(LeggedRobotCfg):
     class env(LeggedRobotCfg.env):
         # num_envs = 4096
-        num_envs = 1024  # was getting a seg fault
+        # num_envs = 1024  # was getting a seg fault
+        num_envs = 3  # was getting a seg fault#ldc
         # num_envs = 100  # was getting a seg fault
-        num_actions = 12
-        num_observations = 235
-        num_proprio_obs = 48
+        # num_actions = 12
+        num_actions = 18#ldc
+        # num_observations = 235
+        num_observations = 253#ldc
+        # num_proprio_obs = 48
+        num_proprio_obs = 66#ldc
         camera_res = [1280, 720]
         camera_type = "d"  # rgb
         num_privileged_obs = None  # 187
@@ -65,19 +69,39 @@ class AliengoObsCfg(LeggedRobotCfg):
     class init_state(LeggedRobotCfg.init_state):
         pos = [0.0, 0.0, 0.38]  # x,y,z [m]
 
+        # default_joint_angles = {  # = target angles [rad] when action = 0.0
+        #     "FL_hip_joint": 0.1,  # [rad]
+        #     "RL_hip_joint": 0.1,  # [rad]
+        #     "FR_hip_joint": -0.1,  # [rad]
+        #     "RR_hip_joint": -0.1,  # [rad]
+        #     "FL_thigh_joint": 0.8,  # [rad]
+        #     "RL_thigh_joint": 1.0,  # [rad]
+        #     "FR_thigh_joint": 0.8,  # [rad]
+        #     "RR_thigh_joint": 1.0,  # [rad]
+        #     "FL_calf_joint": -1.5,  # [rad]
+        #     "RL_calf_joint": -1.5,  # [rad]
+        #     "FR_calf_joint": -1.5,  # [rad]
+        #     "RR_calf_joint": -1.5,  # [rad]
+        # }
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            "FL_hip_joint": 0.1,  # [rad]
-            "RL_hip_joint": 0.1,  # [rad]
-            "FR_hip_joint": -0.1,  # [rad]
-            "RR_hip_joint": -0.1,  # [rad]
-            "FL_thigh_joint": 0.8,  # [rad]
-            "RL_thigh_joint": 1.0,  # [rad]
-            "FR_thigh_joint": 0.8,  # [rad]
-            "RR_thigh_joint": 1.0,  # [rad]
-            "FL_calf_joint": -1.5,  # [rad]
-            "RL_calf_joint": -1.5,  # [rad]
-            "FR_calf_joint": -1.5,  # [rad]
-            "RR_calf_joint": -1.5,  # [rad]
+            "body_leg_0": 0,  # [rad]
+            "leg_0_1_2": 1,  # [rad]
+            "leg_0_2_3": 1,  # [rad]
+            "body_leg_1": 0,  # [rad]
+            "leg_1_1_2": 1,  # [rad]
+            "leg_1_2_3": 1,  # [rad]
+            "body_leg_2": 0,  # [rad]
+            "leg_2_1_2": 1,  # [rad]
+            "leg_2_2_3": 1,  # [rad]
+            "body_leg_3": 0,  # [rad]
+            "leg_3_1_2": 1,  # [rad]
+            "leg_3_2_3": 1,  # [rad]
+            "body_leg_4": 0,  # [rad]
+            "leg_4_1_2": 1,  # [rad]
+            "leg_4_2_3": 1,  # [rad]
+            "body_leg_5": 0,  # [rad]
+            "leg_5_1_2": 1,  # [rad]
+            "leg_5_2_3": 1,  # [rad]
         }
 
     class control(LeggedRobotCfg.control):
@@ -93,10 +117,26 @@ class AliengoObsCfg(LeggedRobotCfg):
         decimation = 4
 
     class asset(LeggedRobotCfg.asset):
-        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/aliengo/urdf/aliengo.urdf"
-        foot_name = "foot"
-        penalize_contacts_on = ["thigh", "calf"]
-        terminate_after_contacts_on = ["base", "trunk", "hip"]
+        # file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/aliengo/urdf/aliengo.urdf"
+        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/spiderpi/urdf/spiderpi.urdf"#ldc#urdf
+        # foot_name = "foot"
+        foot_name=['dummy_eef_0', 'dummy_eef_1', 'dummy_eef_2', 'dummy_eef_3', 'dummy_eef_4', 'dummy_eef_5']#ldc#name the feet to be referenced in legged_robot.py
+        # penalize_contacts_on = ["thigh", "calf"]
+        penalize_contacts_on=[#ldc
+            'leg_0_2',
+            'leg_0_3',
+            'leg_1_2',
+            'leg_1_3',
+            'leg_2_2',
+            'leg_2_3',
+            'leg_3_2',
+            'leg_3_3',
+            'leg_4_2',
+            'leg_4_3',
+            'leg_5_2',
+            'leg_5_3']
+        # terminate_after_contacts_on = ["base", "trunk", "hip"]
+        terminate_after_contacts_on=[]#ldc
         self_collisions = 1  # 1 to disable, 0 to enable...bitwise filter
 
     class domain_rand(LeggedRobotCfg.domain_rand):
@@ -131,7 +171,7 @@ class AliengoObsCfg(LeggedRobotCfg):
         add_noise = False
 
 
-class AliengoObsCfgPPO(LeggedRobotCfgPPO):
+class SpiderpiObsCfgPPO(LeggedRobotCfgPPO):
     class obsSize(LeggedRobotCfgPPO.obsSize):
         encoder_hidden_dims = [128, 64, 32]
 
@@ -139,11 +179,11 @@ class AliengoObsCfgPPO(LeggedRobotCfgPPO):
         run_name = "ObsEncDM"
         alg = "ppo"
         # run_name = ""
-        experiment_name = "obs_aliengo"
+        experiment_name = "obs_spiderpi"
         load_run = -1
         max_iterations = 6000  # number of policy updates
         num_test_envs=1
 
         resume = True
-        resume_path = "weights/rough.pt" # if you want to train
-        # resume_path = "weights/obs.pt" #if you want to eval
+        resume_path = "weights/5.10spiderpi/rough.pt" # if you want to train
+        # resume_path = "weights/5.10spiderpi/obs.pt" #if you want to eval
