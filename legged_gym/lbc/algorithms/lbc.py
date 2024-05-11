@@ -167,7 +167,8 @@ class LBC:
         # print("-"*100)
 
         if isinstance(obs, torch.Tensor):
-            prop = obs[:, :48]
+            # prop = obs[:, :48]
+            prop = obs[:, :66]#ldc#48->66
         elif isinstance(obs, dict):
             prop = obs["proprioception"]
         else:
