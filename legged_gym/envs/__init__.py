@@ -48,6 +48,7 @@ from .aliengo.mixed_terrains.aliengo_lbc_config import AliengoLbcCfg, AliengoLbc
 
 from .spiderpi.mixed_terrains.spiderpi_rough_config import SpiderpiRoughCfg, SpiderpiRoughCfgPPO#ldc
 from .spiderpi.mixed_terrains.spiderpi_obs_config import SpiderpiObsCfg, SpiderpiObsCfgPPO#ldc
+from .spiderpi.mixed_terrains.spiderpi_lbc_config import SpiderpiLbcCfg, SpiderpiLbcCfgPPO#ldc
 
 from .anymal_c.mixed_terrains.anymal_c_rough_config import (
     AnymalCRoughCfg,
@@ -80,6 +81,7 @@ task_registry.register("aliengo_nav", AliengoNav, AliengoNavCfg(), AliengoNavCfg
 
 task_registry.register("spiderpi_rough",Spiderpi,SpiderpiRoughCfg(),SpiderpiRoughCfgPPO())
 task_registry.register("spiderpi_obs",Spiderpi,SpiderpiObsCfg(),SpiderpiObsCfgPPO())
+task_registry.register("spiderpi_lbc",Spiderpi,SpiderpiLbcCfg(),SpiderpiLbcCfgPPO())
 
 task_registry.register("anymal_b", Anymal, AnymalBRoughCfg(), AnymalBRoughCfgPPO())
 task_registry.register("a1", LeggedRobot, A1RoughCfg(), A1RoughCfgPPO())
